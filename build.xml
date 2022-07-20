@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE project [ <!ENTITY include SYSTEM "./common.xml"> ]> -->
+
+<project name="ynirame1.0" default="all" basedir=".">
+
+	<property environment="env" />
+
+	<property name="version" value="3.0.0" />
+	<property name="src.dir" value="./src" />
+	<property name="build.dir" value="./build" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="lib.dir" value="./lib" />
+	<property name="dist.dir" value="./dist" />
+	<property name="dist.classes.dir" value="${dist.dir}/classes" />
+	<property name="doc.dir" value="./docs" />
+	<property name="lib.web.dir" value="C:/iFTA/workspace_2021/UNINET/src/main/webapp/WEB-INF/lib"/>
+	<property name="yni.pkg" value="kr/yni/frame" />
+
+	<path id="library.classpath">
+		<fileset dir="${lib.dir}">
+	        <include name="*.jar"/>
+	    </fileset>
+	</path>
+	
+	<path id="build.classpath">
+		<path refid="library.classpath" />
+	</path>
+	
+	<patternset id="core.resources">
+		<include name="${yni.pkg}/**/?*.class" />
+		<include name="${yni.pkg}/**/?*.properties" />
+		<include name="${yni.pkg}/**/?*.xml" />
+	</patternset>
+    
+	<target name="copy_lib">
+        <copy todir="${lib.web.dir}" overwrite="true">
+            <fileset dir="${dist.dir}" includes="yni-${version}.jar" />
+        </copy>
+    </target>
+
+	<target name="jar" depends="compile">
+
+		<delete>
+			<fileset dir="${dist.dir}" includes="*.jar" />
+		</delete>
+
+		<echo message="+---------------------------------------------------+" />
+		<echo message="| Archiving yni-${version}.jar file                |" />
+		<echo message="+---------------------------------------------------+" />
+
+		<delete dir="${dist.classes.dir}" />
+		<mkdir dir="${dist.classes.dir}" />
+
+		<copy todir="${dist.classes.dir}">
+			<fileset dir="${build.classes.dir}">
+				<patternset refid="core.resources" />
+			</fileset>
+		</copy>
+
+		<jar destfile="${dist.dir}/yni-${version}.jar" basedir="${dist.classes.dir}" />
+
+		<delete dir="${build.classes.dir}" />
+		<delete dir="${dist.classes.dir}" />
+	</target>
+
+	<target name="compile">
+
+		<echo message="Comipling java source files" />
+
+		<mkdir dir="${build.classes.dir}" />
+
+		<javac srcdir="${src.dir}/java" encoding="UTF-8" destdir="${build.classes.dir}" deprecation="yes" debug="true">
+			<compilerarg value="-Xlint:all" />
+			<classpath refid="build.classpath" />
+			<include name="**/*.java" />
+		</javac>
+
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${src.dir}/java">
+				<exclude name="**/*.java" />
+				<exclude name="**/*backup*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.classes.dir}" />
+		<delete dir="${dist.classes.dir}" />
+		<delete>
+			<fileset dir="${dist.dir}" includes="*.jar" />
+		</delete>
+	</target>
+
+	<target name="build" depends="compile, jar" />
+
+	<target name="javadoc">
+		<!-- <delete dir="${doc.dir}/com" failonerror="false" /> -->
+		<mkdir dir="${doc.dir}" />
+		<javadoc destdir="${doc.dir}" locale="ko_KR" encoding="UTF-8"
+			charset="UTF-8" docencoding="UTF-8" sourcepath="${src.dir}/java"
+			packagenames="kr.yni.frame.*" windowtitle="yni Framework v3.0.0">
+			<classpath refid="build.classpath" />
+			<doctitle>
+	        <![CDATA[yni Framework<sup>
+	        <font size=-2>TM</font>
+	      </sup> v3.0.0 <br>API Specification]]></doctitle>
+			<bottom>
+	        <![CDATA[Copyright 2016 YNI All rights reserved.]]>
+			</bottom>
+			<header>
+	        <![CDATA[yni Framework<sup>
+	        <font size=-2>TM</font>
+	      </sup> v1.0]]></header>
+			<footer>
+	      <![CDATA[yni Framework<sup>
+	      <font size=-2>TM</font>
+	    </sup> v3.0.0]]></footer>
+		</javadoc>
+	</target>
+
+	<target name="all" depends="build">
+	</target>
+</project>
