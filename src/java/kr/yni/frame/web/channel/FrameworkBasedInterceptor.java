@@ -97,7 +97,7 @@ public class FrameworkBasedInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		// 중계서버 인증인 경우 세션체크를 하지 않도록 설정(중계서버 Broker용)
-		if(request.getRequestURI().startsWith("/rs/batch/")) { // 2022.06.09 
+		if(request.getRequestURI().startsWith("/rs/batch/") || request.getRequestURI().startsWith("/rs/ws/")) { // 2022.06.09 
 			if(log.isDebugEnabled()) {
 				log.debug("certification of Relay Server(" + request.getRequestURI() + ")");
 			}
