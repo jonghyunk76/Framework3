@@ -34,6 +34,7 @@ public class Constants {
      */
     public static String SERVER_HOST_ADDRESS; // 네트워크 서버 IP
     public static String SERVER_HOST_NAME; // 네트워크 서버명
+    public static String SERVER_COMPANY_CD; // 회사ID(기본값:TOMS)
     
     /**
      * 메시지 코드 변경할지 여부 설정(default : true)
@@ -288,6 +289,8 @@ public class Constants {
 			
 			TEST_USER_EAMIL = StringHelper.null2void(configurator.getString("test.user.email"));
 			TEST_USER_SMS = StringHelper.null2void(configurator.getString("test.user.sms"));
+			
+			SERVER_COMPANY_CD = StringHelper.null2string(configurator.getString("infc.db.compay.cd"), "TOMS");
 			
 			if(!APPLICATION_FILE_ENCODING.isEmpty()) SystemHelper.setSystemProperty("file.encoding", APPLICATION_FILE_ENCODING);
 		} catch(Exception exp) {

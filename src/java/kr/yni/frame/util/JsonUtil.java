@@ -3,14 +3,13 @@ package kr.yni.frame.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -192,6 +191,20 @@ public class JsonUtil {
 		}
 
 		return mapResponse;
+	}
+	
+	/**
+	 * Object를 Parsing을 통해 JsonObject를 리턴한다.
+	 * 
+	 * @param obj Map 또는 List 객체
+	 * @return
+	 * @throws Exception
+	 */
+	public static JsonObject getJsonObject(Object obj) throws Exception {
+		Gson gson = new Gson();
+		String jsonString = gson.toJson(obj);
+		
+		return (JsonObject) JsonParser.parseString(jsonString);
 	}
 	
 	/**

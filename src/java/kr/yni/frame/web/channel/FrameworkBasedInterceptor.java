@@ -178,6 +178,14 @@ public class FrameworkBasedInterceptor extends HandlerInterceptorAdapter {
 		long stime = System.currentTimeMillis();
 		dataMap.put("RS_SERVICE_START_TIME", stime);
 		
+		// 중계서버를 통해 요청되는 경우, 회사코드가 없으면 설정에서 지정한 회사코드를 자동으로 등록한다.(2022.08.29)
+		if(request.getRequestURI().startsWith("/rs/batch/") || request.getRequestURI().startsWith("/rs/ws/")) { 
+			Map refMap = dataMap.getMap();
+			String compcd = StringHelper.null2void(refMap.get("COMPANY_CD"));
+			
+			if(compcd.isEmpty()) refMap.put("COMPANY_CD", Constants.SERVER_COMPANY_CD);
+		}
+		
 		request.setAttribute(Constants.DATA_MAP, dataMap);
 		
 		log.debug(dataMap);
