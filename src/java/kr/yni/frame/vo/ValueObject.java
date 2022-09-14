@@ -1430,7 +1430,7 @@ public class ValueObject implements List<ValueRow>, Serializable {
 	}
 
 	public List<ValueRow> subList(int fromIndex, int toIndex) {
-		return tbl.subList(fromIndex, toIndex);
+		return new ArrayList<ValueRow>(tbl.subList(fromIndex, toIndex));
 	}
 
 	public Object[] toArray() {

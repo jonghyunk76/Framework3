@@ -1,6 +1,7 @@
 package kr.yni.frame.collection;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import kr.yni.frame.util.StringHelper;
@@ -23,7 +24,7 @@ import kr.yni.frame.util.StringHelper;
 *
 */
 @SuppressWarnings("rawtypes")
-public class DBBasedHashMap extends HashMap {
+public class DBBasedHashMap extends LinkedHashMap {
 
 	/**
 	 * 

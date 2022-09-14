@@ -21,6 +21,12 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapExecutor;
+import com.ibatis.sqlmap.engine.impl.ExtendedSqlMapClient;
+import com.ibatis.sqlmap.engine.mapping.sql.Sql;
+import com.ibatis.sqlmap.engine.mapping.statement.MappedStatement;
+import com.ibatis.sqlmap.engine.scope.SessionScope;
+import com.ibatis.sqlmap.engine.scope.StatementScope;
+
 import kr.yni.frame.Constants;
 import kr.yni.frame.exception.FrameException;
 import kr.yni.frame.mapper.util.JcoMapValidator.DataHelper;
@@ -381,6 +387,52 @@ public class YniAbstractDAO extends SqlMapClientDaoSupport {
 	}
 	
 	/**
+	 * 실행하는 Query구문 조회(ibatis용)
+	 * 
+	 * @param sqlId sql ID
+	 * @param params bind 파라메터
+	 * @return Query문
+	 */
+	public String getSqlQuery(String sqlId, Object params) {
+		String sqlStr = null;
+		
+		try {
+			MappedStatement mappedStatement;
+			StatementScope statementScope;
+			SessionScope sessionScope;
+			Sql sql ;
+			
+			mappedStatement = ((ExtendedSqlMapClient) getSqlMapClient()).getMappedStatement(sqlId);
+			
+			sessionScope = new SessionScope();
+			statementScope = new StatementScope(sessionScope);
+			
+			// 생략 하면 다이나믹 쿼리가 적용안됨
+			mappedStatement.initRequest(statementScope);
+			
+			sql = mappedStatement.getSql();
+			
+			String sqlString = sql.getSql(statementScope, params);
+			Object[] paramObj = sql.getParameterMap(statementScope, params).getParameterObjectValues(statementScope, params);
+			
+			sqlStr = bindQueryParam(sqlString, paramObj);
+		} catch(Exception e) {
+			log.error(e);
+		}
+		
+		return sqlStr;
+	}
+
+	public String bindQueryParam(String sql, Object... params) {
+	    for (Object param : params) {
+	       sql = sql.replaceFirst("\\?",
+	               param == null ? "null" : "'"+param.toString()+"'");
+	    }
+	    
+	    return sql;
+	}
+
+	/**
 	 * <code>Connection</code>객체를 구한다.
 	 * @return Connection 객체
 	 */
@@ -432,4 +484,5 @@ public class YniAbstractDAO extends SqlMapClientDaoSupport {
 		
 		return messageSource.getMessage(messageKey, messageParameters, null, rLocale);
 	}
+	
 }

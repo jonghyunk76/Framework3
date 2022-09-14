@@ -669,7 +669,7 @@ public class DataMapHelper {
 		if(oldMap != null && oldMap.size() > 0) {
 			return (Map) ((DBBasedHashMap) oldMap).clone();
 		} else {
-			return new HashMap();
+			return new LinkedHashMap();
 		}
 	}
 	
