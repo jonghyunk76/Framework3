@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class IreportView extends AbstractView {
 	/**
 	 * export설정
 	 */
-	private Map<JRExporterParameter, Object> EXPORT_PARAMETERS = new HashMap<JRExporterParameter, Object>();
+	private Map<JRExporterParameter, Object> EXPORT_PARAMETERS = new LinkedHashMap<JRExporterParameter, Object>();
 	
 	/**
 	 * Default Constructor

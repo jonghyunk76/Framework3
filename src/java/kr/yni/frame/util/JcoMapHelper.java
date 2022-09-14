@@ -1,7 +1,7 @@
 package kr.yni.frame.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -81,7 +81,7 @@ public class JcoMapHelper {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Map<String, Object> getImportParameter(Map map) throws Exception {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new LinkedHashMap<String, Object>();
 
 		Import imp = jco.getFunction(0).getImports();
 		
@@ -163,7 +163,7 @@ public class JcoMapHelper {
 						List lobj = (List) mapObj;
 						
 						for(int j = 0; j <lobj.size(); j++) {
-							Map colMap = new HashMap();
+							Map colMap = new LinkedHashMap();
 							Map mobj = (Map) lobj.get(j);
 							
 							for (int k = 0; k < param.getColumnCount(); k++) {
@@ -186,7 +186,7 @@ public class JcoMapHelper {
 							tbl.add(colMap);
 						}
 					} else { // Map 값이 입력된 경우
-						Map colMap = new HashMap();
+						Map colMap = new LinkedHashMap();
 						
 						for(int k = 0; k < param.getColumnCount(); k++) {
 							Column col = param.getColumn(k);
@@ -212,7 +212,7 @@ public class JcoMapHelper {
 				paramMap.put(paramName, tbl);
 			} else if(param.getType() == JCO.TYPE_XSTRING) {
 				if(param.getColumnCount() > 0) {
-					Map colMap = new HashMap();
+					Map colMap = new LinkedHashMap();
 					
 					for(int k = 0; k < param.getColumnCount(); k++) {
 						Column col = param.getColumn(k);

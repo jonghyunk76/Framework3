@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -119,7 +120,7 @@ public class WebAction {
 	 * @return
 	 */
 	@SuppressWarnings( "rawtypes" )
-	public static ModelAndView returnHashMap(HashMap map) {
+	public static ModelAndView returnHashMap(LinkedHashMap map) {
 		return reponseJsonView(map, null);
 	}
 	
@@ -132,7 +133,7 @@ public class WebAction {
 	 * @return
 	 */
 	@SuppressWarnings( "rawtypes" )
-	public static ModelAndView returnHashMap(HashMap map, String message) {
+	public static ModelAndView returnHashMap(LinkedHashMap map, String message) {
 		return reponseJsonView(map, message);
 	}
 	
@@ -167,9 +168,9 @@ public class WebAction {
 	 * <b>JSON 구조</b>
 	 * List list = new ArrayList();<br>
 	 *<br>
-	 * Map map1 = new HashMap();<br>
+	 * Map map1 = new LinkedHashMap();<br>
 	 * <br>
-	 * Map map2 = new HashMap();<br>
+	 * Map map2 = new LinkedHashMap();<br>
 	 * <br>
 	 * map2.put("productid", "item01");<br>
 	 * map2.put("productname", "아이템01");<br>
@@ -200,9 +201,9 @@ public class WebAction {
 	 * 예시) <br>
 	 * List list = new ArrayList();<br>
 	 *<br>
-	 * Map map1 = new HashMap();<br>
+	 * Map map1 = new LinkedHashMap();<br>
 	 * <br>
-	 * Map map2 = new HashMap();<br>
+	 * Map map2 = new LinkedHashMap();<br>
 	 * <br>
 	 * map2.put("productid", "item01");<br>
 	 * map2.put("productname", "아이템01");<br>
@@ -237,10 +238,10 @@ public class WebAction {
 	 */
 	@SuppressWarnings( { "rawtypes", "unchecked" } )
 	public static ModelAndView returnDataSet(List list, String message, List flist) {
-		Map map = new HashMap();
+		Map map = new LinkedHashMap();
 		
 		if(list != null && list.size() < 1) {
-			Map emptyMap = new HashMap();
+			Map emptyMap = new LinkedHashMap();
 			
 			emptyMap.put("empty", "MSG_NO_SEARCH_RESULT");
 			
@@ -277,7 +278,7 @@ public class WebAction {
 		if (log.isDebugEnabled()) log.debug("reponseJsonView.....");
 		
 		List<Map<String, Object>> list = null;
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		
 		if(obj instanceof List) {
 			// input type = [{col1=value, col2=value},{col1=value, col2=value}]
@@ -298,6 +299,14 @@ public class WebAction {
 			modelMap.putAll((HashMap) obj);
 			
 			Object objt =  ((HashMap) obj).get("rows");
+			if(objt != null) {
+				list = (List) objt;
+			}
+		} else if(obj instanceof LinkedHashMap) {
+			// input type = {rows=[{col1=value, col2=value},{col1=value, col2=value},{headers=[head1, head2], file=string, sheet=string},{empty=string}],total=string}
+			modelMap.putAll((LinkedHashMap) obj);
+			
+			Object objt =  ((LinkedHashMap) obj).get("rows");
 			if(objt != null) {
 				list = (List) objt;
 			}
@@ -350,7 +359,7 @@ public class WebAction {
 	 * @return ModelAndView
 	 */
 	public static ModelAndView resultJsonMsg(boolean success, String message){
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		
 		modelMap.put("success", success);
 		
@@ -379,11 +388,11 @@ public class WebAction {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static ModelAndView describeMessage(String message) {
-		Map result = new HashMap();
+		Map result = new LinkedHashMap();
 		
 		result.put("message", message);
 		
-		Map<String, Object> modelMap = new HashMap<String, Object>(2);
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>(2);
 		
 		modelMap.put("total", 1);
 		modelMap.put("rows", result);
@@ -401,12 +410,12 @@ public class WebAction {
 	 */
 	public static ModelAndView processResult(String message) {
 
-		Map<String, Object> modelMap = new HashMap<String, Object>(2);
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>(2);
 		modelMap.put("success", true);
 
 		if (!StringHelper.isNull(message)) {
 
-			Map<String, Object> errorMap = new HashMap<String, Object>(2);
+			Map<String, Object> errorMap = new LinkedHashMap<String, Object>(2);
 			errorMap.put("message", message);
 			modelMap.put("messages", errorMap);
 		}
@@ -432,7 +441,7 @@ public class WebAction {
 	 * @return ModelAndView
 	 */
 	public static ModelAndView returnJsonView(List<Map<String, Object>> list, String message) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		String jsonString = null;
 
 		if(!StringHelper.isNull(message)) {
@@ -563,7 +572,7 @@ public class WebAction {
 	 * @return ModelAndView
 	 */
 	private static ModelAndView returnFileView(Object obj, String fname, String message) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		
 		if(!StringHelper.isNull(message)) {
 			modelMap.put("success", false);
@@ -621,7 +630,7 @@ public class WebAction {
 	 * @return ModelAndView
 	 */
 	public static ModelAndView returnExcelView(List<List<Map<String, Object>>> list, String fname, String message) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		
 		if(!StringHelper.isNull(message)) {
 			modelMap.put("success", false);
@@ -661,7 +670,7 @@ public class WebAction {
 	 */
 	@SuppressWarnings("unchecked")
 	public static ModelAndView returnIReportView(List<JasperPrint> list, DataMap map, String message) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		
 		if(!StringHelper.isNull(message)) {
 			modelMap.put("success", false);
@@ -700,7 +709,7 @@ public class WebAction {
 	 * @return
 	 */
 	public static ModelAndView returnXMLView(Object obj, String fname, String message) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
+		Map<String, Object> modelMap = new LinkedHashMap<String, Object>();
 		
 		if(!StringHelper.isNull(message)) {
 			modelMap.put("success", false);

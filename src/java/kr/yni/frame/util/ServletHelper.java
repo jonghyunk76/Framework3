@@ -1,7 +1,7 @@
 package kr.yni.frame.util;
 
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ServletHelper {
      * @param dataMap
      */
     public static Map getBindMultipartFiles(Map<String, MultipartFile> multipartFiles) throws Exception {
-        Map map = new HashMap();
+        Map map = new LinkedHashMap();
         
         for (Iterator it = multipartFiles.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
@@ -59,7 +59,7 @@ public class ServletHelper {
      * @param dataMap
      */
     public static Map getBindMultipleFiles(MultiValueMap<String, MultipartFile> multipartFiles) throws Exception {
-        Map map = new HashMap();
+        Map map = new LinkedHashMap();
         
         for (Iterator it = multipartFiles.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
@@ -118,7 +118,7 @@ public class ServletHelper {
      */
     public static Map getReqeustParameters(ServletRequest request) throws Exception {
     	String flagEscape = "Y";
-    	Map map = new HashMap();
+    	Map map = new LinkedHashMap();
         Enumeration enum2 = request.getParameterNames();
         
         if(request.getParameter("UN_ESC") == null) {
@@ -154,7 +154,7 @@ public class ServletHelper {
     public static Map getChangeParameters(ServletRequest request, String prefix) throws Exception {
     	String flagEscape = "Y";
     	Enumeration enum2 = request.getParameterNames();
-        Map params = new HashMap();
+        Map params = new LinkedHashMap();
         int ecount = 0;
         
         try {

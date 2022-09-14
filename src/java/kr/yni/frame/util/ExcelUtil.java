@@ -2,7 +2,7 @@ package kr.yni.frame.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -123,7 +123,7 @@ public class ExcelUtil {
 					}
 					
 					if(list != null && list.size() > 0) {
-						Map columMap = new HashMap();
+						Map columMap = new LinkedHashMap();
 						String file = StringHelper.null2void(map.get("filename"));
 						String sheet = StringHelper.null2void(map.get("sheetname"));
 						
@@ -206,7 +206,7 @@ public class ExcelUtil {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List setHeaderInfo(Object headerObject, List<Map<String, Object>> list, String fname, String sheet) {
 		List<Map<String, Object>> header = new LinkedList();
-		Map<String, Object> headers = new HashMap(); 
+		Map<String, Object> headers = new LinkedHashMap(); 
 		
 		if(headerObject == null) return header;
 		else {
@@ -224,7 +224,7 @@ public class ExcelUtil {
 				
 				if(name.isEmpty()) continue;
 				
-				Map<String, Object> column = new HashMap<String, Object>();
+				Map<String, Object> column = new LinkedHashMap<String, Object>();
 				
 				// 컬럼의 최대크기 구하기
 				int s = 3200;

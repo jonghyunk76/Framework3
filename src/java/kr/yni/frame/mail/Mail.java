@@ -233,15 +233,15 @@ public class Mail {
      * {@link java.util.Collection } 타입으로 메일주소 리스트를 설정하면 내부에서 {@link javax.mail.internet.InternetAddress } 형태로 변환해서 처리한다.
      * 이 때, <code>ValueObjce</code>의 key는 받는 사람의 이메일주소이며 value는 받는 사람의 이름이다.<br>
      * 예) <code>List<Map<String, Object>> toList = new ArrayList<Map<String, Object>>();
-	 * Map<String, Object> map = new HashMap<String, Object>();
+	 * Map<String, Object> map = new LinkedHashMap<String, Object>();
 	 * map.put("addr","amugae1@mailserver.com");
 	 * map.put("name","아무개1");
 	 * toList.add(map);
-	 * map = new HashMap<String, Object>();
+	 * map = new LinkedHashMap<String, Object>();
 	 * map.put("addr","amugae2@mailserver.com");
 	 * map.put("name","아무개2");
 	 * toList.add(map);
-	 * map = new HashMap<String, Object>();
+	 * map = new LinkedHashMap<String, Object>();
 	 * map.put("addr","amugae3@mailserver.com");
 	 * map.put("name","아무개3");
 	 * toList.add(map);
@@ -284,15 +284,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> toList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * toList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * toList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * toList.add(map);<br>
@@ -317,15 +317,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> toList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * toList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * toList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * toList.add(map);<br>
@@ -351,15 +351,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> toList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * toList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * toList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * toList.add(map);<br>
@@ -474,15 +474,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> ccList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * ccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * ccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * ccList.add(map);<br>
@@ -525,15 +525,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> ccList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * ccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * ccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * ccList.add(map);<br>
@@ -563,15 +563,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> ccList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * ccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * ccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * ccList.add(map);<br>
@@ -686,15 +686,15 @@ public class Mail {
      * 사용예)
      * <pre>
      * List<Map<String, Object>> bccList = new ArrayList<Map<String, Object>>();<br>
-     * Map<String, Object> map = new HashMap<String, Object>();<br>
+     * Map<String, Object> map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae1@mailserver.com");<br>
 	 * map.put("name","아무개1");<br>
 	 * bccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae2@mailserver.com");<br>
 	 * map.put("name","아무개2");<br>
 	 * bccList.add(map);<br>
-	 * map = new HashMap<String, Object>();<br>
+	 * map = new LinkedHashMap<String, Object>();<br>
 	 * map.put("addr","amugae3@mailserver.com");<br>
 	 * map.put("name","아무개3");<br>
 	 * bccList.add(map);<br>

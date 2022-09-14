@@ -1,6 +1,6 @@
 package kr.yni.frame.config;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -75,7 +75,7 @@ public class ConfiguratorFactory {
      */
     public synchronized void initialize() throws ConfiguratorException {
     	if(configMap == null) {
-    		configMap = new HashMap<String, Configurator>();
+    		configMap = new LinkedHashMap<String, Configurator>();
     	}
     }
     

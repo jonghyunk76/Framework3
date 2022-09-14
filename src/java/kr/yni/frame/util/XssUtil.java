@@ -1,6 +1,6 @@
 package kr.yni.frame.util;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class XssUtil {
 	 * @return  
 	 */
 	public static Map XssChange(Map map, String[] entryVal) throws Exception {
-		Map paramMap = new HashMap();
+		Map paramMap = new LinkedHashMap();
 		
 		for(Iterator iter = map.entrySet().iterator(); iter.hasNext();){
 			

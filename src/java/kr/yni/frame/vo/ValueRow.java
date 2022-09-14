@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +26,7 @@ public class ValueRow {
 	private Map<String,Object> row = null;
 
 	public ValueRow() {
-		row = new HashMap<String,Object>();
+		row = new LinkedHashMap<String,Object>();
 	}
 	
 	public ValueRow(Map<String,Object> map) {
@@ -38,7 +38,7 @@ public class ValueRow {
 	}
 	
 	public ValueRow clone() {
-		return new ValueRow(new HashMap<String,Object>(row));
+		return new ValueRow(new LinkedHashMap<String,Object>(row));
 	}
 
 	public Map<String,Object> getMap() {

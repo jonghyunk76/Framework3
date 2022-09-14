@@ -38,7 +38,7 @@ public class JcoXmlHelper {
 	/**
 	 * <p>
      * 임시로 저장된 XML파일을 읽어 실제 저장될 위치에 파일 생성<br>
-     * Map map = new HashMap();<br>
+     * Map map = new LinkedHashMap();<br>
      * <br>
      * map.put(FileUitl.XML_TEMP_PATH, tempPath);<br>
      * map.put(FileUitl.XML_TEMP_NAME, tempFileName);<br>

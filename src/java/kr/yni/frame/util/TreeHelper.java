@@ -1,7 +1,7 @@
 package kr.yni.frame.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -128,7 +128,7 @@ public class TreeHelper {
             }
             return createMenuMap(treeMap, parent);
         } else {
-            return new HashMap();
+            return new LinkedHashMap();
         }
     }
     
@@ -284,7 +284,7 @@ public class TreeHelper {
     	ArrayList childList= new ArrayList();
     	
     	if(curMap == null){
-			curMap = new HashMap();
+			curMap = new LinkedHashMap();
 		}
 
 		for(int i=startIdx; i < treeList.size(); i++) {
@@ -296,7 +296,7 @@ public class TreeHelper {
 			String childValue = StringHelper.null2void(tMap.get(child));
 			
 			if((parentValue.isEmpty() || parentValue.equals(childValue)) && call == null) {
-				curMap = new HashMap();
+				curMap = new LinkedHashMap();
 				childList= new ArrayList();
 				curMap = tMap;
 				

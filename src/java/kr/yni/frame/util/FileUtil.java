@@ -12,7 +12,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -484,7 +484,7 @@ public class FileUtil {
 			throw new FrameException("This formFile can't found.");
 		}
 		
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<String, String>();
 		
 		String filePath =  getFullPath(propName);
 		String workPath = getWorkPath(propName);
@@ -1073,7 +1073,7 @@ public class FileUtil {
 	 * @throws Exception
 	 */
     public static Map getFile(String propName, FormFile file) throws Exception {
-		Map map = new HashMap();
+		Map map = new LinkedHashMap();
         String filePath = getFullPath(propName);
         String workPath = getWorkPath(propName);
         String originalFileName = file.getOriginalFilename();

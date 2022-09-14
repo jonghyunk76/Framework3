@@ -1,7 +1,7 @@
 package kr.yni.frame.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +65,7 @@ public class JsonUtil {
 		String jsonString = null;
 		
 		if(list != null && list.size() < 1) {
-			Map emptyMap = new HashMap();
+			Map emptyMap = new LinkedHashMap();
 			
 			emptyMap.put("empty", "");
 			
@@ -92,7 +92,7 @@ public class JsonUtil {
 		String jsonString = null;
 		
 		if(list != null && list.size() < 1) {
-			Map emptyMap = new HashMap();
+			Map emptyMap = new LinkedHashMap();
 			
 			emptyMap.put("empty", "");
 			

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +28,12 @@ public class Launcher {
 	/**
 	 * 실행할 child java의 환경 변수를 담아놓는다.
 	 */
-	private Map<String, String> envMap = new HashMap<String, String>();
+	private Map<String, String> envMap = new LinkedHashMap<String, String>();
 
 	/**
 	 * 실행할 child java의 시스템 프로퍼티를 담아 놓는다.
 	 */
-	private Map<String, String> sysProps = new HashMap<String, String>();
+	private Map<String, String> sysProps = new LinkedHashMap<String, String>();
 
 	/**
 	 * 실행할 child java의 JVM 설정값들을 담아 놓는다.
@@ -64,19 +64,19 @@ public class Launcher {
 		mainClass = className;
 	}
 
-	public void start(List<HashMap<String, Object>> argVO) throws Exception {
+	public void start(List<LinkedHashMap<String, Object>> argVO) throws Exception {
 		start(argVO, false);
 	}
 
 	@SuppressWarnings("rawtypes")
-	public void start(List<HashMap<String, Object>> argVO, boolean waitFor)
+	public void start(List<LinkedHashMap<String, Object>> argVO, boolean waitFor)
 			throws Exception {
 		List<String> argList = new ArrayList<String>();
 		String[] args = null;
 		
 		if (argVO != null) {
 			for (int i = 0; i < argVO.size(); i++) {
-				HashMap<String, Object> map = argVO.get(i);
+				LinkedHashMap<String, Object> map = argVO.get(i);
 				Iterator itor = map.keySet().iterator();
 				
 				while (itor.hasNext()) {

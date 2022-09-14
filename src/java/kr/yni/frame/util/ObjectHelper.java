@@ -1,7 +1,7 @@
 package kr.yni.frame.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,12 +47,12 @@ public class ObjectHelper {
 		Map map = null;
 		
 		if(obj == null) {
-			map = new HashMap();
+			map = new LinkedHashMap();
 		} else {
 			if(obj instanceof Map) {
 				map = (Map) obj;
 			} else {
-				map = new HashMap();
+				map = new LinkedHashMap();
 			}
 		}
 		

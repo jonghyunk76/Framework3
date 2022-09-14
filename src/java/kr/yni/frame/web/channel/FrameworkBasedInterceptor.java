@@ -1,7 +1,7 @@
 package kr.yni.frame.web.channel;
 
 import java.io.BufferedReader;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -140,7 +140,7 @@ public class FrameworkBasedInterceptor extends HandlerInterceptorAdapter {
 		if(log.isInfoEnabled()) log.info("request = " + request + " / type = " + conType);
 		
 		if(conType.toLowerCase().equals("application/json")) { // json타입의 요청을 처리하기 위해 추가(2022-06-10)
-			Map map = new HashMap();
+			Map map = new LinkedHashMap();
 			StringBuffer json = new StringBuffer();
             String line = null;
             

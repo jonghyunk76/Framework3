@@ -1,6 +1,6 @@
 package kr.yni.frame.collection;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

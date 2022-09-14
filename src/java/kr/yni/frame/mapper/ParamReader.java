@@ -3,7 +3,7 @@ package kr.yni.frame.mapper;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ import kr.yni.frame.pool.JcoPoolManager;
 public class ParamReader {
 	private static Log log = LogFactory.getLog(ParamReader.class);
 
-	private static Map<String, Jco> jcoMap = new HashMap<String, Jco>();
+	private static Map<String, Jco> jcoMap = new LinkedHashMap<String, Jco>();
 
 	/**
 	 * <p>
