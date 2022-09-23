@@ -896,7 +896,6 @@ public class JcoDAO {
 
 					hsMap.put(field.getName(), field.getString() == null ? "": field.getString());
 				}
-				hsMap.put("TOTALCOUNT", totCount);
 				
 				rlist.add(hsMap);
 				getCount++;

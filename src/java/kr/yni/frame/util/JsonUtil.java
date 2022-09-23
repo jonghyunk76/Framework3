@@ -160,7 +160,14 @@ public class JsonUtil {
 	            builder.setPrettyPrinting();
 	            
 	            Gson gson = builder.create();
-	            listResponse = gson.fromJson(jsonResponse, List.class);
+	            
+	            List tlist = gson.fromJson(jsonResponse, List.class);
+	            
+	            if(i == -1) {
+	            	listResponse = tlist;
+	            } else {
+	            	if(tlist.size() > i) listResponse.add(tlist.get(i));
+	            }
 			} else {
 				throw new Exception("MalFormed JSON Array Response.");
 			}
