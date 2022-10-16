@@ -143,23 +143,30 @@ public class FrameworkBasedInterceptor extends HandlerInterceptorAdapter {
 			Map map = new LinkedHashMap();
 			StringBuffer json = new StringBuffer();
             String line = null;
+            String jsonStr = "";
             
             try {
 	            BufferedReader reader = request.getReader();
 	            
-	            while((line = reader.readLine()) != null) {
-	                json.append(line);
+	            if(reader != null) {
+		            while((line = reader.readLine()) != null) {
+		                json.append(line);
+		            }
 	            }
-	            
-	            if(json.length() > 0) {
-	                String jsonStr = json.toString().trim();
-	                
-	                map = JsonUtil.getMap(jsonStr);
-	            }
-	            
-	            dataMap.putAll(map);
             } catch(Exception e) {
             	log.error("Error reading JSON string: " + e.toString());
+            } finally {
+            	if(json.length() > 0) {
+	                jsonStr = json.toString().trim();   
+	            } else {
+	            	jsonStr = StringHelper.null2void(request.getAttribute("UNINET_JSON_STRING"));
+	            }
+            	
+            	if(!jsonStr.isEmpty()) {
+            		map = JsonUtil.getMap(jsonStr);
+	            
+            		dataMap.putAll(map);
+            	}
             }
 		} else {
 			dataMap.putAll(ServletHelper.getChangeParameters(request, null));

@@ -276,8 +276,8 @@ public class DataMapHelper {
 		
 		if(dataMap != null && insertWhoInfo) {
 			// 파일 크기 설정
-			dataMap.put("FILE_MAX_UPLOAD_SIZE", Constants.FILE_MAX_UPLOAD_SIZE);
-			dataMap.put("FILE_MAX_MEMORY_SIZE", Constants.FILE_MAX_MEMORY_SIZE);
+			if(isContainsSession(dataMap, "FILE_MAX_UPLOAD_SIZE")) dataMap.put("FILE_MAX_UPLOAD_SIZE", Constants.FILE_MAX_UPLOAD_SIZE);
+			if(isContainsSession(dataMap, "FILE_MAX_MEMORY_SIZE")) dataMap.put("FILE_MAX_MEMORY_SIZE", Constants.FILE_MAX_MEMORY_SIZE);
 			
 			// 환경설정(시스템)
 			if(isContainsSession(dataMap, Constants.KEY_SYS_CONFIG_01)) dataMap.put(Constants.KEY_SYS_CONFIG_01, SessionUtil.getSystemConfig01(dataMap));
