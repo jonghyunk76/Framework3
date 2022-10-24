@@ -34,7 +34,7 @@ public class YniAbstractMultiDAO extends YniAbstractDAO {
 	public void setSuperSqlMapClient(SqlMapClient sqlMapClient) {
 		if(log.isDebugEnabled()) log.debug("get setSuperSqlMapClient.... start");
 		
-		super.setSqlMapClient(sqlMapClient);
+		super.setSuperSqlMapClient(sqlMapClient);
 	}
 
 }

@@ -36,6 +36,8 @@ public class BatchLoggerImpl implements BatchLogger {
 	private static Log log = LogFactory.getLog(BatchLoggerImpl.class);
 
 	private static String filePath = null;
+	
+	private static String serverKey = null;
 
 	private JobExecutionContext context = null;
 	
@@ -59,7 +61,8 @@ public class BatchLoggerImpl implements BatchLogger {
 		try {
 			Configurator configurator = ConfiguratorFactory.getInstance().getConfigurator();
 			
-			filePath = Constants.APPLICATION_REAL_PATH + configurator.getString("batch.log.path");
+			filePath = configurator.getString("batch.log.path");
+			serverKey = configurator.getString("application.license.key");
 			
 			if(log.isDebugEnabled()) {
 				log.debug("log file path=" + filePath);
@@ -93,7 +96,7 @@ public class BatchLoggerImpl implements BatchLogger {
 		target = batchTarget;
 
 		if(args != null) {
-			buf.append("[ dataSet = ");
+			buf.append("["+serverKey+"] [ dataSet = ");
 			for (int i = 0; i < args.size(); i++) {
 				if(args.get(i) instanceof Map) {
 					Map map = (Map) args.get(i);
@@ -123,7 +126,7 @@ public class BatchLoggerImpl implements BatchLogger {
 	public void logMessage(String message, List<Object> args) throws Exception {
 		StringBuffer buf = new StringBuffer();
 
-		buf.append("[");
+		buf.append("["+serverKey+"] [");
 		buf.append(message);
 		buf.append(" = ");
 		for (int i = 0; i < args.size(); i++) {
@@ -150,7 +153,7 @@ public class BatchLoggerImpl implements BatchLogger {
 	public void logMessage(String message) throws Exception {
 		StringBuffer buf = new StringBuffer();
 
-		buf.append("[");
+		buf.append("["+serverKey+"] [");
 		buf.append(this.getDateFormat("yyyy.MM.dd HH:mm:ss"));
 		buf.append("] ");
 
@@ -225,7 +228,7 @@ public class BatchLoggerImpl implements BatchLogger {
 
 	public void logEnd(boolean succ, String message) throws Exception {
 		StringBuffer buf = new StringBuffer();
-		buf.append("[result=");
+		buf.append("["+serverKey+"] [result=");
 		if(succ) {
 			buf.append("successed");
 		} else {
@@ -243,7 +246,7 @@ public class BatchLoggerImpl implements BatchLogger {
 
 	public void logEnd(boolean succ) throws Exception {
 		StringBuffer buf = new StringBuffer();
-		buf.append("[result=");
+		buf.append("["+serverKey+"] [result=");
 		if(succ) {
 			buf.append("successed");
 		} else {
