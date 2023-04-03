@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PushbackInputStream;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -200,7 +202,10 @@ public class ExcelXSSFReader extends FileReader {
         	if(file == null) {
                 throw new FileNotFoundException("Unable to locate give file..");
         	} else {
-        		fis = new FileInputStream(file);
+        		// 대용량 엑셀 데이터 처리를 위해 변경(기본:1억 > 10억). 2023-02-01
+        		fis = Files.newInputStream(file.toPath()); // FileInputStream에서 InputStream으로 변경
+                IOUtils.setByteArrayMaxOverride(1000000000); // 최대크기 변경
+                
 	        	if(!fis.markSupported()) {
 	        		fis = new PushbackInputStream(fis, 8);
 	        	}

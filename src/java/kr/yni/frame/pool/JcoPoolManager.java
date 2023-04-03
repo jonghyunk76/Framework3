@@ -188,45 +188,116 @@ public class JcoPoolManager {
 			long waittime = (long)configurator.getInt("jco.wait.time", CONNECTION_WAIT_TIME);
 			
 			// 연결 SAP서버 정보
-			String client = configurator.getString(sid + ".client", "").trim();
+			String client = null;
 			String userid = null;
 			String password = null;
 			String hostname = null;
 			String language = null;
 			String sysnr = null;
+			String propFile = null;
 			
-			//if(!encryptor.isInitialized()) {
-			if(false) { // 암호화 적용 안함
-				userid = encryptor.decrypt(configurator.getString(sid + ".userid", "")).trim();
-				password = encryptor.decrypt(configurator.getString(sid + ".password", "")).trim();
-				hostname = encryptor.decrypt(configurator.getString(sid + ".hostname", "")).trim();
-				language = encryptor.decrypt(configurator.getString(sid + ".language", DEFAULT_LANGUAGE)).trim();
-				sysnr = encryptor.decrypt(configurator.getString(sid + ".system.number", "")).trim();
+			try {
+				propFile = configurator.getString(sid + ".properties", "");
+			} catch(Exception e) {
+				log.warn(e.getMessage());
+			}
+			
+			log.debug("sap.properties file = " + propFile);
+			
+			if(propFile != null && !propFile.isEmpty()) {
+				jcoConnection(sid, maxconnection, propFile, maxpool, timeout, waittime);
 			} else {
-				userid = configurator.getString(sid + ".userid", "").trim();
-				password = configurator.getString(sid + ".password", "").trim();
-				hostname = configurator.getString(sid + ".hostname", "").trim();
-				language = configurator.getString(sid + ".language", DEFAULT_LANGUAGE).trim();
-				sysnr = configurator.getString(sid + ".system.number", "").trim();
+				client = configurator.getString(sid + ".client", "").trim();
+				
+				//if(!encryptor.isInitialized()) {
+				if(false) { // 암호화 적용 안함
+					userid = encryptor.decrypt(configurator.getString(sid + ".userid", "")).trim();
+					password = encryptor.decrypt(configurator.getString(sid + ".password", "")).trim();
+					hostname = encryptor.decrypt(configurator.getString(sid + ".hostname", "")).trim();
+					language = encryptor.decrypt(configurator.getString(sid + ".language", DEFAULT_LANGUAGE)).trim();
+					sysnr = encryptor.decrypt(configurator.getString(sid + ".system.number", "")).trim();
+				} else {
+					userid = configurator.getString(sid + ".userid", "").trim();
+					password = configurator.getString(sid + ".password", "").trim();
+					hostname = configurator.getString(sid + ".hostname", "").trim();
+					language = configurator.getString(sid + ".language", DEFAULT_LANGUAGE).trim();
+					sysnr = configurator.getString(sid + ".system.number", "").trim();
+				}
+				
+				if (log.isDebugEnabled()) {
+					log.debug("jco_resource.properties > max connection=" + maxconnection);
+					log.debug("jco_resource.properties > client=" + client);
+					log.debug("jco_resource.properties > userid=" + userid);
+					log.debug("jco_resource.properties > password=" + password);
+					log.debug("jco_resource.properties > host=" + hostname);
+					log.debug("jco_resource.properties > language=" + language);
+					log.debug("jco_resource.properties > system number=" + sysnr);
+				}
+	
+				jcoConnection(sid, maxconnection, client, userid, password,
+						hostname, language, sysnr, maxpool, timeout, waittime);
 			}
-			
-			if (log.isDebugEnabled()) {
-				log.debug("jco_resource.properties > max connection=" + maxconnection);
-				log.debug("jco_resource.properties > client=" + client);
-				log.debug("jco_resource.properties > userid=" + userid);
-				log.debug("jco_resource.properties > password=" + password);
-				log.debug("jco_resource.properties > host=" + hostname);
-				log.debug("jco_resource.properties > language=" + language);
-				log.debug("jco_resource.properties > system number=" + sysnr);
-			}
-
-			jcoConnection(sid, maxconnection, client, userid, password,
-					hostname, language, sysnr, maxpool, timeout, waittime);
 		} catch (Exception ex) {
 			throw ex;
 		}
 	}
+	
+	/**
+	 * sid에 대한 connection pool을 추가하고 repository를 생성한다.
+	 * 
+	 * @param sid : Alias for this pool
+	 * @param max_connections : Max. number of connections
+	 * @param propFile : Properies 파일경로
+	 */
+	@SuppressWarnings("deprecation")
+	public static void jcoConnection(String sid, int max_connections, String propFile, int maxpool, long timeout, long waittime) throws Exception {
+		try {
+			long stime = System.currentTimeMillis(); // 수행 시간 계산용
+			
+			if (JCO.getClientPoolManager().getPool(sid) != null) {
+				JCO.getClientPoolManager().removePool(sid);
+			}
+			
+			OrderedProperties logonProperties = OrderedProperties.load(propFile);
+			
+			JCO.addClientPool(sid, max_connections, logonProperties);
+			
+			// JCO Client 생성
+			// String key, int max_connections, String client, String user, String passwd, String lang, String ashost, String sysnr
+			//JCO.addClientPool(sid, max_connections, client, user, passwd, lang, ashost, sysnr);
+			// String key, int max_connections, String client, String user, String passwd, String lang, String mshost, String r3name, String group
+			//JCO.addClientPool(sid, max_connections, client, user, passwd, lang, ashost, r3name, group);
+			
+			long ftime = System.currentTimeMillis();
+			if (log.isDebugEnabled()) {
+				log.info("2. add JCO client pool.(execute time=" + (ftime - stime) + " msec.");
+				viewConnectionInformation(sid, "jco connection ==> ");
+			}
+			
+			stime = System.currentTimeMillis(); // 수행 시간 계산용
+			
+			JCO.getClientPoolManager().getPool(sid).setMaxPoolSize(maxpool);
+			JCO.getClientPoolManager().getPool(sid).setTimeoutCheckPeriod(timeout);
+			JCO.getClientPoolManager().getPool(sid).setMaxWaitTime(waittime);
+			
+			// Enables/disables cleanup when the client is being returned to its pool
+			JCO.getClientPoolManager().getPool(sid).setResetOnRelease(true);
 
+			// JCO를 통해 호출된 function 모듈의 모든 메타정보를 저장하기 위한 Repository 생성
+			IRepository repository = JCO.createRepository("FTARepository", sid);
+
+			repositoryTable.put(sid, repository);
+			
+			ftime = System.currentTimeMillis();
+			if(log.isDebugEnabled()) log.info("3. created JCO repository.(execute time=" + (ftime - stime) + " msec.");
+		} catch (JCO.Exception exp) {
+			if (log.isErrorEnabled()) {
+				log.error("jcoConnection(" + sid + ") : " + exp);
+			}
+			throw exp;
+		}
+	}
+	
 	/**
 	 * sid에 대한 connection pool을 추가하고 repository를 생성한다.
 	 * 
@@ -252,9 +323,12 @@ public class JcoPoolManager {
 			if (JCO.getClientPoolManager().getPool(sid) != null) {
 				JCO.getClientPoolManager().removePool(sid);
 			}
-
+			
 			// JCO Client 생성
+			// String key, int max_connections, String client, String user, String passwd, String lang, String ashost, String sysnr
 			JCO.addClientPool(sid, max_connections, client, user, passwd, lang, ashost, sysnr);
+			// String key, int max_connections, String client, String user, String passwd, String lang, String mshost, String r3name, String group
+			//JCO.addClientPool(sid, max_connections, client, user, passwd, lang, ashost, r3name, group);
 			
 			long ftime = System.currentTimeMillis();
 			if (log.isDebugEnabled()) {

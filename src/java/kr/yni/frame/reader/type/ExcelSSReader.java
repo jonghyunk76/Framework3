@@ -9,6 +9,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.util.IOUtils;
 
 import kr.yni.frame.exception.FrameException;
 import kr.yni.frame.reader.FileReader;
@@ -173,7 +175,10 @@ public class ExcelSSReader extends FileReader {
         try {
             if(log.isDebugEnabled()) log.debug("Opening workbook [" + file.getName() + "]");
             
-            fis = new FileInputStream(file);
+            // 대용량 엑셀 데이터 처리를 위해 변경(기본:1억 > 10억). 2023-02-01
+            fis = Files.newInputStream(file.toPath()); // FileInputStream에서 InputStream으로 변경
+            IOUtils.setByteArrayMaxOverride(1000000000); // 최대크기 변경
+            
             if(file.getName().toLowerCase().endsWith(".xls")) {
 	            if(!fis.markSupported()) {
 	        		fis = new PushbackInputStream(fis, 8);
