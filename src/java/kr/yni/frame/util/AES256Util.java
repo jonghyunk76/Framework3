@@ -40,7 +40,7 @@ public class AES256Util {
      * @throws UnsupportedEncodingException 키값의 길이가 16이하일 경우 발생
      * @throws ConfiguratorException 시스템 설정값을 조회하면서 발생하는 오류
      */
-    public AES256Util(String key) throws UnsupportedEncodingException, ConfiguratorException, FrameException {
+    public AES256Util(String key) throws Exception {
     	try {
 	    	Configurator configurator = ConfiguratorFactory.getInstance().getConfigurator();
 			this.charset = configurator.getString("application.context.charset");
@@ -83,7 +83,7 @@ public class AES256Util {
      * @throws UnsupportedEncodingException 키값의 길이가 16이하일 경우 발생
      * @throws ConfiguratorException 시스템 설정값을 조회하면서 발생하는 오류
      */
-    public AES256Util(String key, int lens) throws UnsupportedEncodingException, ConfiguratorException, FrameException {
+    public AES256Util(String key, int lens) throws Exception {
     	try {
 	    	Configurator configurator = ConfiguratorFactory.getInstance().getConfigurator();
 			this.charset = configurator.getString("application.context.charset");

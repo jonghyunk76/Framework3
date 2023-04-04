@@ -79,13 +79,13 @@ public class Mail {
      * 기본생성자이며, 기본적으로 첨부파일 없음 & charset을 utf-8로 지정한다.<br>
      * </p>
      */
-    public Mail(JavaMailSenderImpl javaMail) {    	
+    public Mail(final JavaMailSenderImpl javaMail) {    	
     	Properties props = javaMail.getSession().getProperties();
 		
 		props.setProperty("mail.smtp.host", javaMail.getHost());
 		props.setProperty("mail.mime.charset", DEFAULT_CHARSET);
 		props.setProperty("mail.mime.encodefilename", "true");
-				
+		
 		session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(javaMail.getUsername(), javaMail.getPassword());
