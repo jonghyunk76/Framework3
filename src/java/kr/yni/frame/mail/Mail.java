@@ -59,6 +59,9 @@ public class Mail {
     private Session session;
     private MimeMessage message;
     
+    private static String uname;
+    private static String pword;
+    
     @SuppressWarnings("static-access")
 	private String contentType = "text/plain;charset=" + this.DEFAULT_CHARSET;
     
@@ -79,16 +82,19 @@ public class Mail {
      * 기본생성자이며, 기본적으로 첨부파일 없음 & charset을 utf-8로 지정한다.<br>
      * </p>
      */
-    public Mail(final JavaMailSenderImpl javaMail) {    	
+    public Mail(JavaMailSenderImpl javaMail) {    	
     	Properties props = javaMail.getSession().getProperties();
 		
 		props.setProperty("mail.smtp.host", javaMail.getHost());
 		props.setProperty("mail.mime.charset", DEFAULT_CHARSET);
 		props.setProperty("mail.mime.encodefilename", "true");
 		
+		uname = javaMail.getUsername();
+		pword = javaMail.getPassword();
+		
 		session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(javaMail.getUsername(), javaMail.getPassword());
+                return new PasswordAuthentication(uname, pword);
             }
         });
 		
