@@ -880,6 +880,10 @@ public class ExcelXSSFReader extends FileReader {
                         	                double value = Double.parseDouble(StringHelper.null2string(pVO.getFloat(n, field), "0"))*100;
                         	                cell.setCellValue(String.valueOf(value+"%"));
                         	                cell.setCellType(CellType.STRING);
+                        	            } else if(format.equals("percent1")) {
+                        	                double value = Double.parseDouble(StringHelper.null2string(pVO.getFloat(n, field), "0"));
+                        	                cell.setCellValue(String.valueOf(value+"%"));
+                        	                cell.setCellType(CellType.STRING);
                         	            } else {
 	                                		cell.setCellValue(pVO.getString(n, field));
 	                                    	cell.setCellType(CellType.STRING);
@@ -1022,6 +1026,10 @@ public class ExcelXSSFReader extends FileReader {
         	if(!StringHelper.isNull(format)) {
 	        	if(format.equals("percent") && columnValue != null) {
 	                double value = Double.parseDouble(StringHelper.null2string(columnValue, "0"))*100;
+	                cell.setCellValue(String.valueOf(value+"%"));
+	                cell.setCellType(CellType.STRING);
+	            } else if(format.equals("percent1") && columnValue != null) {
+	                double value = Double.parseDouble(StringHelper.null2string(columnValue, "0"));
 	                cell.setCellValue(String.valueOf(value+"%"));
 	                cell.setCellType(CellType.STRING);
 	            } else {

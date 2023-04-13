@@ -361,6 +361,9 @@ public class CsvReader extends FileReader {
 		                                	} else if(format.equals("percent")) {
                             	                double value = Double.parseDouble(StringHelper.null2string(pVO.getFloat(n, field), "0"))*100;
                             	                dlist.add(idex, String.valueOf(value+"%"));
+                            	            } else if(format.equals("percent1")) {
+                            	                double value = Double.parseDouble(StringHelper.null2string(pVO.getFloat(n, field), "0"));
+                            	                dlist.add(idex, String.valueOf(value+"%"));
                             	            } else {
                             	            	dlist.add(idex, pVO.getString(n, field));
 		                                	}

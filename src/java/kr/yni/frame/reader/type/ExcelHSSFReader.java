@@ -756,6 +756,10 @@ public class ExcelHSSFReader extends FileReader {
 	                double value = Double.parseDouble(StringHelper.null2string(columnValue, "0"))*100;
 	                cell.setCellValue(String.valueOf(value+"%"));
 	                cell.setCellType(CellType.STRING);
+	            } else if(format.equals("percent1") && columnValue != null) {
+	                double value = Double.parseDouble(StringHelper.null2string(columnValue, "0"));
+	                cell.setCellValue(String.valueOf(value+"%"));
+	                cell.setCellType(CellType.STRING);
 	            } else {
 	            	cell.setCellValue(StringHelper.unescape(StringHelper.null2void(columnValue)));
 	                cell.setCellType(CellType.STRING);
